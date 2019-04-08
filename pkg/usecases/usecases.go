@@ -11,7 +11,7 @@ type TaskInteractor struct {
 	Logger         Logger
 }
 
-func (interactor *TaskInteractor) Create(mac, sysid string) error {
+func (interactor *TaskInteractor) CreateAndPublish(mac, sysid string) error {
 	task := domain.Task{
 		Mac:   mac,
 		Sysid: sysid,

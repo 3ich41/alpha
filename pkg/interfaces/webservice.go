@@ -8,7 +8,7 @@ type Task struct {
 }
 
 type TaskInteractor interface {
-	Create(mac, sysid string) error
+	CreateAndPublish(mac, sysid string) error
 }
 
 type WebserviceHandler struct {
@@ -24,7 +24,7 @@ func (handler WebserviceHandler) CreateTask(c *gin.Context) {
 	}
 
 	if (task.Mac != "") && (task.SysID != "") {
-		err := handler.TaskInteractor.Create(task.Mac, task.SysID)
+		err := handler.TaskInteractor.CreateAndPublish(task.Mac, task.SysID)
 		if err != nil {
 			c.JSON(500, gin.H{"Status": "Nie utworzono zadania"})
 			return
