@@ -1,8 +1,8 @@
 # The binary to build (just the basename).
-BIN := beta
+BIN := alpha
 
 # Where to push the docker image.
-REGISTRY ?= thockin
+REGISTRY ?= m15ch4
 
 # This version-strategy uses git tags to set the version string
 VERSION := $(shell git describe --tags --always --dirty)
