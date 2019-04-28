@@ -2,13 +2,8 @@ package usecases
 
 import "m15.io/alpha/pkg/domain"
 
-type Logger interface {
-	Log(message string) error
-}
-
 type TaskInteractor struct {
 	TaskRepository domain.TaskRepository
-	Logger         Logger
 }
 
 func (interactor *TaskInteractor) CreateAndPublish(mac, sysid string) error {
