@@ -85,7 +85,11 @@ func (m *MessagingClient) Publish(body []byte, exchangeName string, exchangeType
 		amqp.Publishing{
 			Body: body, // Our JSON body as []byte
 		})
-	log.Debugf("A message was sent: %v", body)
+
+	log.WithFields(log.Fields{
+		"message": string(body),
+	}).Debug("A message was sent")
+
 	return err
 }
 
@@ -115,7 +119,12 @@ func (m *MessagingClient) PublishOnQueue(body []byte, queueName string) error {
 			ContentType: "application/json",
 			Body:        body, // Our JSON body as []byte
 		})
-	log.Debugf("A message was sent to queue %v: %v", queueName, body)
+
+	log.WithFields(log.Fields{
+		"queueName": queueName,
+		"message":   string(body),
+	}).Debug("A message was sent to queue")
+
 	return err
 }
 
