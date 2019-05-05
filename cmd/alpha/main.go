@@ -44,7 +44,7 @@ func main() {
 	engine := gin.Default()
 	v1 := engine.Group("api/v1")
 	{
-		v1.POST("/switch", webserviceHandler.CreateTask)
+		v1.POST("/switch", webserviceHandler.NewTask)
 	}
 	engine.Run(":8090")
 }

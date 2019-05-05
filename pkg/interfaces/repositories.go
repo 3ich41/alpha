@@ -22,7 +22,7 @@ func NewMqTaskRepo(mqHandler MqHandler) *MqTaskRepo {
 	return mqTaskRepo
 }
 
-func (repo *MqTaskRepo) Publish(task domain.Task) error {
+func (repo *MqTaskRepo) Publish(task *domain.Task) error {
 	msg, err := json.Marshal(task)
 	if err != nil {
 		return err
