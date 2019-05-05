@@ -11,6 +11,7 @@ type config struct {
 	MqPassword string
 	MqHostname string
 	MqPort     string
+	LogLevel   string
 }
 
 // mustGetEnv returns an env variable value if present and fails othwewise
@@ -33,5 +34,6 @@ func InitConfig() {
 		MqPassword: m("MQ_PASSWORD"),
 		MqHostname: m("MQ_HOSTNAME"),
 		MqPort:     m("MQ_PORT"),
+		LogLevel:   m("LOGLEVEL"),
 	}
 }
