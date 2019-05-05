@@ -16,7 +16,7 @@ type WebserviceHandler struct {
 }
 
 func (handler WebserviceHandler) NewTask(c *gin.Context) {
-	log.Debug("Received request to switch clientl")
+	log.Debug("Received request to switch client")
 	task := new(domain.Task)
 
 	err := c.BindJSON(task)

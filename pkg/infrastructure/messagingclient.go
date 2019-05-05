@@ -98,6 +98,9 @@ func (m *MessagingClient) PublishOnQueue(body []byte, queueName string) error {
 		panic("Tried to send message before connection was initialized. Don't do that.")
 	}
 	ch, err := m.conn.Channel() // Get a channel from the connection
+	if err != nil {
+		return err
+	}
 	defer ch.Close()
 
 	queue, err := ch.QueueDeclare( // Declare a queue that will be created if not exists with some args
@@ -108,6 +111,9 @@ func (m *MessagingClient) PublishOnQueue(body []byte, queueName string) error {
 		false,     // no-wait
 		nil,       // arguments
 	)
+	if err != nil {
+		return err
+	}
 
 	// Publishes a message onto the queue.
 	err = ch.Publish(
@@ -119,13 +125,16 @@ func (m *MessagingClient) PublishOnQueue(body []byte, queueName string) error {
 			ContentType: "application/json",
 			Body:        body, // Our JSON body as []byte
 		})
+	if err != nil {
+		return err
+	}
 
 	log.WithFields(log.Fields{
 		"queueName": queueName,
 		"message":   string(body),
 	}).Debug("A message was sent to queue")
 
-	return err
+	return nil
 }
 
 func (m *MessagingClient) Subscribe(exchangeName string, exchangeType string, consumerName string, handlerFunc func(amqp.Delivery)) error {
