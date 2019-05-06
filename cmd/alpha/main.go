@@ -27,10 +27,10 @@ func init() {
 }
 
 func main() {
+	config.InitConfig()
 
 	log.Infof("Starting service %v...", appName)
-	config.InitConfig()
-	
+
 	switch config.Config.LogLevel {
 	case "DEBUG":
 		log.SetLevel(log.DebugLevel)
@@ -39,7 +39,6 @@ func main() {
 	default:
 		log.SetLevel(log.TraceLevel)
 	}
-
 
 	mqHandler := infrastructure.NewMessagingClient(
 		config.Config.MqHostname,
