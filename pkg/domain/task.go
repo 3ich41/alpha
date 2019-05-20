@@ -9,6 +9,7 @@ type Task struct {
 	Timestamp string `json:"timestamp" binding:"required"`
 }
 
+// TaskRepository is an interface representing repository where requests to configure clients are written to
 type TaskRepository interface {
 	Publish(task *Task) error
 }
