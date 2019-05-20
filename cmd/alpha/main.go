@@ -3,6 +3,8 @@ package main
 import (
 	"os"
 
+	"m15.io/alpha/pkg/delivery/grpc"
+
 	"github.com/gin-gonic/gin"
 	"m15.io/alpha/pkg/config"
 	"m15.io/alpha/pkg/infrastructure"
@@ -45,17 +47,22 @@ func main() {
 		config.Config.MqPort,
 		config.Config.MqUsername,
 		config.Config.MqPassword)
-
 	taskInteractor := new(usecases.TaskInteractor)
 	taskInteractor.TaskRepository = interfaces.NewMqTaskRepo(mqHandler)
 
+	grpcConfHandler := grpc.NewGrpcConfHandler(config.Config.GrpcHostname, config.Config.GrpcPort)
+	confInteractor := new(usecases.ConfInteractor)
+	confInteractor.ConfRepository = interfaces.NewGrpcConfRepository(grpcConfHandler)
+
 	webserviceHandler := interfaces.WebserviceHandler{}
 	webserviceHandler.TaskInteractor = taskInteractor
+	webserviceHandler.ConfInteractor = confInteractor
 
 	engine := gin.Default()
 	v1 := engine.Group("api/v1")
 	{
 		v1.POST("/switch", webserviceHandler.NewTask)
+		v1.POST("/configure", webserviceHandler.ConfigureClient)
 	}
 	engine.Run(":8090")
 }

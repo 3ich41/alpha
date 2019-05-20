@@ -1,0 +1,23 @@
+syntax="proto3";
+package conf_grpc;
+
+service ConfHandler {
+  rpc GetConf (FetchRequest) returns (Conf);
+}
+
+message FetchRequest {
+    string username =1;
+    string ipaddr =2;
+    string mac =3;
+    string timestamp =4;
+}
+
+message Conf {
+    string username =1;
+    repeated Button button =2;
+}
+
+message Button {
+    string text =1;
+    string value =2;
+}
