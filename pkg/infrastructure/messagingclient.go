@@ -87,7 +87,7 @@ func (m *MessagingClient) Publish(body []byte, exchangeName string, exchangeType
 		})
 
 	log.WithFields(log.Fields{
-		"message": string(body),
+		"body": string(body),
 	}).Debug("A message was sent")
 
 	return err
@@ -131,7 +131,7 @@ func (m *MessagingClient) PublishOnQueue(body []byte, queueName string) error {
 
 	log.WithFields(log.Fields{
 		"queueName": queueName,
-		"message":   string(body),
+		"body":      string(body),
 	}).Debug("A message was sent to queue")
 
 	return nil
